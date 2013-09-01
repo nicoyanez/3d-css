@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+	<meta charset="utf-8" />
+ 	<head>
+ 		<title>Nombre de la página</title>
+ 		<style>
+ 		body{
+ 			background-color: #A9AB9C;
+ 			margin: 0px;
+ 			padding: 0px;
+ 		}
+ 		#contenedor{
+ 			background-color: #8EC413;
+ 			position: absolute;
+ 			width: 100%;
+ 			height: 100%;
+ 			z-index: -551;
+ 			overflow: hidden;
+ 		}
+ 		#left-menu ul {
+ 			margin: 0px;
+ 			padding: 0px;
+ 		}
+ 		#left-menu ul li {
+ 			list-style: none;
+ 			font-size: 40px;
+ 		}
+ 		#left-menu ul li:hover {
+ 			background-color: #000000;
+ 			color: #FFFFFF;
+ 		}
+ 		#left-menu{
+ 			transition: all 0.5s;
+ 			display: inline-block;
+ 			vertical-align: text-top;
+ 			margin: 0px;
+ 			padding: 0px;
+ 			background-color: #F0EB13;
+ 			width: 200px;
+ 			overflow: hidden;
+ 			height: 100%;
+ 			position: relative;
+ 			margin-left: -150px;
+ 		}
+ 		#left-menu:hover{
+ 			margin-left: 0px;
+ 		}
+ 		.center-container{
+ 			position: absolute;
+ 			margin-left: -5px;
+ 			overflow: hidden;
+ 			font-size: 30px;
+ 			background-color: #BFC1B7;
+ 			height: 100%;
+ 			transition: all 0.5s;
+ 			vertical-align: text-top;
+ 			display: inline-block;
+ 			box-shadow: 0px 0px 5px 5px #272822 inset;
+ 			width: calc(100% - 205px);
+ 			transform-origin: left  center 0;
+ 			transform: perspective(550) rotate3d(0, 1, 0, 35deg);
+ 			-webkit-transform-origin: left  center 0;
+ 			-webkit-transform: perspective(550) rotate3d(0, 1, 0, 35deg);
+ 		}
+ 		.center-container p {
+ 			padding: 5px 50px;
+ 		}
+ 		.center-container:hover{
+ 			background-color: white;
+ 			transform-origin: left  center 0;
+ 			transform: perspective(550) rotate3d(0, 1, 0, 0deg);
+ 			-webkit-transform-origin: left  center 0;
+			-webkit-transform: perspective(550) rotate3d(0, 1, 0, 0deg);
+ 		}
+ 		.superCont{
+ 			position: absolute;
+ 			margin-left: -5px;
+ 			font-size: 30px;
+ 			background-color: #BFC1B7;
+ 			height: 100%;
+ 			transition: all 0.5s;
+ 			vertical-align: text-top;
+ 			display: inline-block;
+ 			box-shadow: 0px 0px 5px 5px #272822 inset;
+ 			width: calc(100% - 205px);
+ 			transform-origin: left  center 0;
+ 			transform: perspective(550) rotate3d(0, 1, 0, 35deg);
+ 			-webkit-transform-origin: left  center 0;
+ 			-webkit-transform: perspective(550) rotate3d(0, 1, 0, 35deg) translate3d(0,-105%,0);
+ 		}
+ 		.superCont:hover{
+ 			background-color: white;
+ 			transform-origin: left  center 0;
+ 			transform: perspective(550) rotate3d(0, 1, 0, 0deg);
+ 			-webkit-transform-origin: left  center 0;
+			-webkit-transform: perspective(550) rotate3d(0, 1, 0, 0deg) translate3d(0,-105%,0);
+
+ 		}
+ 		.superCont article{
+ 			//background-color: #2139E2;
+ 			//border: 5px solid red;
+ 			height: 100%;
+ 			padding: 10px 10px;
+ 			overflow: auto;
+ 		}
+ 		.superCont article:nth-child(odd){
+ 			background-color: #FF060D;
+ 		}
+ 		.superCont article:nth-child(even){
+ 			background-color: #D09E37;
+ 		}
+
+ 		</style>
+ 		<script>
+ 			function contenedorN(n){return document.getElementById(n);}
+ 			window.onload = function(){
+	 			/*var xmlhttp;
+				if (window.XMLHttpRequest)  {// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{// code for IE6, IE5
+				  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange=function(e){
+					if (xmlhttp.readyState==4 && xmlhttp.status==200){
+						console.log(xmlhttp.responseText);
+					}else{console.log(e);}
+				};
+				xmlhttp.open("GET","http://www.google.com",true);
+				xmlhttp.send();*/
+ 				//contenedorN('contenedor5').innerHTML = 
+ 			};
+ 			
+ 			function muestra(id){
+				var cont = document.getElementById(id);
+				cont.style.marginTop = "-45%";
+				//cont.style.transform = 'translate(-500px, 0)';
+			}
+			function roll(n,element){
+				var e = document.getElementById(element);
+				var z = 'position: absolute;margin-left: -5px;font-size: 30px;background-color: #BFC1B7;height: 100%;transition: all 0.5s;vertical-align: text-top;display: inline-block;box-shadow: 0px 0px 5px 5px #272822 inset;width: calc(100% - 205px);transform-origin: left  center 0;transform: perspective(550) rotate3d(0, 1, 0, 35deg);-webkit-transform-origin: left  center 0;';
+ 				var a ='-webkit-transform: ';
+				var b = 'perspective(550) rotate3d(0, 1, 0, 0deg) translate3d(0,-';
+				var c = '%,0);';
+				e.setAttribute('style',a+b+105*n+c);
+			}
+			function roll2(n){
+				var offset =104;
+				var head = document.getElementsByTagName('head')[0];
+				var style = document.createElement('style');
+				var a = 'position: absolute;margin-left: -5px;font-size: 30px;background-color: #BFC1B7;height: 100%;transition: all 0.5s;vertical-align: text-top;display: inline-block;box-shadow: 0px 0px 5px 5px #272822 inset;width: calc(100% - 205px);transform-origin: left  center 0;transform: perspective(550) rotate3d(0, 1, 0, 35deg);-webkit-transform-origin: left  center 0;-webkit-transform: perspective(550) rotate3d(0, 1, 0, 35deg) scaleX(4) translate3d(0,-';
+				var b = '%,0);';
+				var ah = 'background-color: white;transform-origin: left  center 0;transform: perspective(550) rotate3d(0, 1, 0, 0deg);-webkit-transform-origin: left  center 0;-webkit-transform: perspective(550) rotate3d(0, 1, 0, 0deg) scaleX(1.18) translate3d(0,-';
+				var bh ='%,0);';
+				var declarations = document.createTextNode(".superCont { "+a+offset*n+b+"} .superCont:hover { "+ah+offset*n+bh+" }");
+
+				style.type = 'text/css';
+
+				if (style.styleSheet) {
+				  style.styleSheet.cssText = declarations.nodeValue;
+				} else {
+				  style.appendChild(declarations);
+				}
+
+				head.appendChild(style);
+			}
+ 		</script>
+	</head>
+	<body>
+		<section id="contenedor">
+			<article id="left-menu">
+				<ul>
+					<li onmouseover="roll2(1);">contenido 1</li>
+					<li onmouseover="roll2(2);">contenido 2</li>
+					<li onmouseover="roll2(3);">contenido 3</li>
+					<li onmouseover="roll2(4);">contenido 4</li>
+					<li onmouseover="roll2(5);">contenido 5</li>
+					<li onmouseover="roll2(6);">contenido 6</li>
+					<li onmouseover="roll2(7);">contenido 7</li>
+					<li onmouseover="roll2(8);">contenido 8</li>
+
+				</ul>
+			</article><!--
+			<article id="contenedor1" class="center-container">
+				<p>hoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdj<br>
+					ahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdjahoal as asd sasdnasjdan kdja</p>
+
+			</article>
+			<article id="contenedor2" class="center-container">
+				<p>dos</p>
+			</article>
+			<article id="contenedor3" class="center-container">
+				<p>tres</p>
+			</article>
+			<article id="contenedor4" class="center-container">
+				<p>cua</p>
+			</article>  -->
+			<article id="superCont" class="superCont">
+				<article>Void</article>
+				<article> <h1>HTML Ipsum Presents</h1>
+	       
+						<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+						<h2>Header Level 2</h2>
+							       
+						<ol>
+						   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+						   <li>Aliquam tincidunt mauris eu risus.</li>
+						</ol>
+						
+				</article>
+				<article> 
+					<ul>
+					   <li>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.</li>
+					   <li>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</li>
+					   <li>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</li>
+					   <li>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</li>
+					</ul>
+					            
+				</article>
+				<article> 
+					<ul>
+					   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+					   <li>Aliquam tincidunt mauris eu risus.</li>
+					   <li>Vestibulum auctor dapibus neque.</li>
+					   <h3>Header Level 3</h3>
+
+						<ul>
+						   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+						   <li>Aliquam tincidunt mauris eu risus.</li>
+						</ul>
+
+						
+					</ul>
+					<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+			</article>
+			<article>cuatro</article>
+			<article>cinco</article>
+			<article>seis</article>
+			<article>siete</article>
+			<article>ocho</article>
+
+			<article>Void</article>
+		</section>
+	</body>
+</html>

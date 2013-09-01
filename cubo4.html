@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+	<meta charset="utf-8" />
+ 	<head>
+ 		<title>Nombre de la página</title>
+ 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+ 		<script>
+ 		var cubo;var roty=0;var rotx=0;var i=0;var images =[];
+ 			function gira(e){
+ 				switch (e.keyCode){
+ 					case 37:
+ 						roty-=90;
+ 						break;
+ 					case 38:
+ 						rotx+=90;
+ 						break;
+ 					case 39:
+ 						roty+=90;
+ 						break;
+ 					case 40:
+ 						rotx-=90;
+ 						break;
+ 				}
+ 				var elementos  = document.getElementsByClassName('cubo');
+ 				nextIt(elementos);
+ 				//cubo.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 			}
+ 			
+ 			function vercara(n){
+ 				switch (n){
+ 					case 1:
+ 						roty=0;
+ 						rotx=-90;
+ 						break;
+ 					case 2:
+ 						roty=0;
+ 						rotx=0;
+ 						break;
+ 					case 3:
+ 						roty=90;
+ 						rotx=0;
+ 						break;
+ 					case 4:
+ 						roty=-90;
+ 						rotx=0;
+ 						break;
+ 					case 5:
+ 						roty=0;
+ 						rotx=90;
+ 						break;
+ 					case 6:
+ 						roty=0;
+ 						rotx=180;
+ 						break;
+ 				}
+ 				var elementos  = document.getElementsByClassName('cubo');
+ 				
+ 				nextIt(elementos);
+ 				//cubo.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 			}
+ 			function nextIt(elementos){
+ 				setTimeout(function(){
+ 					if(i<elementos.length){
+ 						var e = elementos[i];
+	 					e.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 						nextIt(elementos);
+ 						i++;
+ 					}else{i=0;}
+ 				},i*20);
+ 			}
+ 			function nextIt2(elementos){
+ 				setTimeout(function(){
+ 					if(i>=0){
+ 						var e = elementos[i];
+	 					e.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 						nextIt2(elementos);
+ 						i--;
+ 					}else{i=elementos.length;}
+ 				},i*20);
+ 			}
+ 			google.load("feeds", "1");
+ 			function feedLoaded(result) {
+ 				//console.log(result);
+			  if (!result.error) {
+			    var container = document.getElementById("content");
+			    container.innerHTML = '';
+			    // http://code.google.com/apis/ajaxfeeds/documentation/reference.html#JSON
+			    for (var i = 0; i < result.feed.entries.length; i++) {
+			      var entry = result.feed.entries[i];
+			      var content = entry.content;
+			      var from = content.indexOf("<img src=")+10;
+			      var to = content.indexOf("><br>")-1;
+			      var img = entry.content.substring(from,to);
+			      if(img!="" && from!=9){
+			      		images.push(img);
+			      }
+			      //var div = document.createElement("div");
+			      //div.appendChild(document.createTextNode(entry.title));
+			      //div.innerHTML =entry.content.substring(from,to);
+			      //container.appendChild(div);
+			    }
+			    console.log("ready");
+			    console.log(images);
+			    var elementos  = document.getElementsByClassName('cubo');
+ 				for(var i =0;i<elementos.length;i++){
+ 					var nodosHijos =elementos[i].childNodes;
+ 					var cont = 0;
+ 					for (var j =1;j<nodosHijos.length;j=j+2){
+ 						if(j!=5 && j!=7){
+	 						//newImage = "url(img/dos.jpg)";
+	 						newImage = "url("+images[cont]+")";
+	 						//console.log(cont);
+	        				nodosHijos[j].style.backgroundImage = newImage;
+	        				nodosHijos[j].style.backgroundSize = "660px 160px";
+	        				nodosHijos[j].style.backgroundPosition= (i*-110)+"px 0px";
+	        				nodosHijos[j].style.backgroundRepeat="no-repeat";
+	        				cont++;
+	        			}
+ 					}
+ 				}
+			  }
+			}
+ 			window.onload = function(){
+ 				//cargando rss -begin
+ 				//var feed = new google.feeds.Feed("http://louijover.tumblr.com/rss");
+ 				var feed = new google.feeds.Feed("http://jaidefinichon.com/rss");
+ 				feed.setNumEntries(10);
+ 				feed.includeHistoricalEntries();
+  				feed.load(feedLoaded);
+  				//cargando rss -end
+ 				cubo = document.getElementById('cubo1');
+ 				document.onkeydown = gira;
+ 				vercara(1);
+ 				/*var elementos  = document.getElementsByClassName('cubo');
+ 				for(var i =0;i<elementos.length;i++){
+ 					var nodosHijos =elementos[i].childNodes;
+ 					for (var j =1;j<nodosHijos.length;j=j+2){
+ 						if(j!=5 && j!=7){
+	 						//newImage = "url(img/dos.jpg)";
+	 						newImage = "url("+images[j]+")";
+	        				nodosHijos[j].style.backgroundImage = newImage;
+	        				nodosHijos[j].style.backgroundSize = "660px 160px";
+	        				nodosHijos[j].style.backgroundPosition= (i*-110)+"px 0px";
+	        				nodosHijos[j].style.backgroundRepeat="no-repeat";
+	        			}
+ 					}
+ 				}*/
+			};
+ 		</script>
+ 		<style>
+ 			body{
+ 				background-color: #EDF22F;
+ 				margin: 0px;
+ 				padding:0px;
+ 			}
+ 			.mainContainer{
+ 				background-color: #DBDCD6;
+ 				position: absolute;
+ 				width: 100%;
+ 				height: 100%;
+ 			}
+ 			.left{
+ 				background-color: #E0DB18;
+ 				position: relative;
+ 				width: 120px;
+ 				height: 120px;
+ 				display: inline-block;
+ 			}
+ 			.left ul {
+ 				margin: 0;
+ 				padding: 0px 0px 0px 10px;
+ 			}
+ 			.left ul li{
+ 				text-align: center;
+ 				display: inline-block;
+ 				list-style-type: none;
+ 				width: 30px;
+ 				height: 30px;
+ 				background-color: white;
+ 			}
+ 			.left ul li.void{
+ 				background-color: rgba(1,1,1,0);
+ 			}
+ 			.left ul li.void:hover{
+ 				background-color: rgba(1,1,1,0);
+ 			}
+ 			.left ul li:hover{
+ 				color: white;
+ 				background-color: black;
+ 			}
+
+ 			/*inicio del cubo */
+	 		.contenedor {
+	 			position: absolute;
+	 			left:170px;
+	 			top: 10px;
+	 			//height: 500px;
+	 			display: inline-block;
+	 			-webkit-perspective: 800;
+			    -webkit-perspective-origin: 50% 200px;
+	      		-moz-perspective: 800;
+	      		-moz-perspective-origin: 50% 200px;
+	    	}
+    		.cubo {
+			    position: relative;
+			    margin: 0 auto 0;
+			    height: 200px;
+			    width: 110px;
+			    display: inline-block;
+			    -webkit-transition: -webkit-transform 0.3s;
+			    -webkit-transform-style: preserve-3d;
+			    -moz-transition: -moz-transform 2s linear;
+			    -moz-transform-style: preserve-3d;
+			}
+		    .cara {
+			    position: absolute;
+			    -webkit-backface-visibility:hidden;
+			    height: 120px;
+			    width: 120px;
+			    padding: 20px;
+			    font-size: 47px;
+			    line-height: 1em;
+			    color: #fff;
+			    border: 2px solid rgba(255,255,255,.1);
+		    }
+		    .cara:hover{
+		    	background-color: rgba(50, 50, 50, 1);
+		    }
+		    .uno {
+			    -webkit-transform: rotateX(90deg) translateZ(80px);
+			    width: 70px;
+		    }
+		    .dos {
+			    -webkit-transform: rotateX(0deg) translateZ(80px);
+			    width: 70px;
+		    }
+		    .tres {
+			    -webkit-transform: rotateY(-90deg) translateZ(80px);
+		    }
+		    .cuatro {
+			    -webkit-transform: rotateY(90deg) translateZ(20px);
+		    }
+		    .cinco {
+			    -webkit-transform: rotateX(-90deg) translateZ(80px);
+			    width: 70px;
+		    }
+		    .seis {
+			    -webkit-transform: rotateX(180deg) translateZ(80px);
+			    width: 70px;
+		    }
+ 		</style>
+	</head>
+	<body>
+<h1>im&aacutegenes cargadas desde tumblr jaidefinichon.com</h1>
+		<section class="mainContainer">
+			<article class="left">
+				<ul>
+					<li class="void">.</li>
+					<li onmouseover="vercara(1)">1</li>
+					<li class="void">.</li>
+				</ul>
+				<ul>
+					<li class="void">.</li>
+					<li onmouseover="vercara(2)">2</li>
+					<li class="void">.</li>
+				</ul>
+				<ul>
+					<li class="void">.</li>
+					<li onmouseover="vercara(5)">5</li>
+					<li class="void">.</li>
+				</ul>
+				<ul>
+					<li class="void">.</li>
+					<li onmouseover="vercara(6)">6</li>
+					<li class="void">.</li>
+				</ul>
+			</article>
+
+			<article class="contenedor">
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+				</article>
+
+			</article>
+		</section>
+		<div id="content">Hola</div>
+	</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+	<meta charset="utf-8" />
+ 	<head>
+ 		<title>Nombre de la página</title>
+ 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+ 		<script>
+ 			var cubo;var roty=0;var rotx=0;var i=0;var images =[];
+ 			function rota(){
+ 				var elementos  = document.getElementsByClassName('cubo');
+ 				//elementos[0].style.WebkitTransformOrigin= "85px 0px -312px";
+ 				elementos[0].style.WebkitTransformOrigin= "75px 0px -295px";
+ 				elementos[0].style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg) scale3d(2,2,2)';
+ 			}
+ 			function gira(e){
+ 				switch (e.keyCode){
+ 					case 37:
+ 						roty-=30;
+ 						break;
+ 					case 38:
+ 						rotx+=90;
+ 						break;
+ 					case 39:
+ 						roty+=30;
+ 						break;
+ 					case 40:
+ 						rotx-=90;
+ 						break;
+ 				}
+ 				rota();
+ 				//nextIt(elementos);
+ 				//cubo.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 			}
+ 			
+ 			function vercara(n){
+ 				switch (n){
+ 					case 1:
+ 						roty=0;
+ 						rotx=-90;
+ 						break;
+ 					case 2:
+ 						roty=0;
+ 						rotx=0;
+ 						break;
+ 					case 3:
+ 						roty=90;
+ 						rotx=0;
+ 						break;
+ 					case 4:
+ 						roty=-90;
+ 						rotx=0;
+ 						break;
+ 					case 5:
+ 						roty=0;
+ 						rotx=90;
+ 						break;
+ 					case 6:
+ 						roty=0;
+ 						rotx=180;
+ 						break;
+ 				}
+ 				var elementos  = document.getElementsByClassName('cubo');
+ 				nextIt(elementos);
+ 				//cubo.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 			}
+ 			function recursiveRotation(){
+ 				setTimeout(function(){
+ 					roty+=30;
+ 					rota();
+ 					recursiveRotation();
+ 				},1500);
+ 			}
+ 			function nextIt(elementos){
+ 				setTimeout(function(){
+ 					if(i<elementos.length){
+ 						var e = elementos[i];
+	 					e.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 						nextIt(elementos);
+ 						i++;
+ 					}else{i=0;}
+ 				},i*20);
+ 			}
+ 			function nextIt2(elementos){
+ 				setTimeout(function(){
+ 					if(i>=0){
+ 						var e = elementos[i];
+	 					e.style.WebkitTransform= 'rotateY('+roty+'deg) rotateX('+rotx+'deg)';
+ 						nextIt2(elementos);
+ 						i--;
+ 					}else{i=elementos.length;}
+ 				},i*20);
+ 			}
+ 			function goTo(url){
+ 				window.location.href = url;
+ 			}
+ 			google.load("feeds", "1");
+ 			function feedLoaded(result) {
+ 				console.log(result);
+			  if (!result.error) {
+			    var container = document.getElementById("content");
+			    container.innerHTML = '';
+			    // http://code.google.com/apis/ajaxfeeds/documentation/reference.html#JSON
+			    for (var i = 0; i < result.feed.entries.length; i++) {
+			      var entry = result.feed.entries[i];
+			      console.log(entry);
+			      //container.innerHTML +="<p>" +entry.title+"</p>";
+			      var from =entry.content.indexOf("<a href=");
+			      var to = entry.content.indexOf("</a>") +4;
+			      var output =entry.content.substring(from,to);
+			      console.log(output);
+			      //container.innerHTML +="<p>" +output+"</p>";
+			      from = output.indexOf('src=')+5;
+			      to = output.indexOf('jpg">') +3;
+			      output2 =output.substring(from,to);
+			      console.log(output2);
+			      images.push(output2);
+			    }
+			    console.log("ready");
+			    var elementos  = document.getElementsByClassName('cubo');
+ 				for(var i =0;i<elementos.length;i++){
+ 					var nodosHijos =elementos[i].childNodes;
+ 					var cont = 0;
+ 					for (var j =1;j<nodosHijos.length;j=j+2){
+ 						//if(j!=5 && j!=7){
+	 						//newImage = "url(img/dos.jpg)";
+	 						newImage = "url("+images[cont]+")";
+	 						//console.log(cont);
+	        				nodosHijos[j].style.backgroundImage = newImage;
+	        				nodosHijos[j].style.backgroundSize = "170px 96px";
+	        				//nodosHijos[j].style.backgroundPosition= (i*-110)+"px 0px";
+	        				nodosHijos[j].style.backgroundRepeat="no-repeat";
+	        				var lnk = result.feed.entries[cont].link;
+	        				console.log(lnk);
+	        				var text = "alert(lnk);";
+	        				//nodosHijos[j].onclick = function(){alert("hello");};
+	        				nodosHijos[j].onclick = (function() {
+						      var currentlink = lnk;
+						      return function() { 
+						          goTo(currentlink);
+						      }
+						   })();
+	        				cont++;
+	        			//}
+ 					}
+ 				}
+			  }
+			}
+ 			window.onload = function(){
+ 				//cargando rss -begin
+ 				//var feed = new google.feeds.Feed("http://louijover.tumblr.com/rss");
+ 				var feed = new google.feeds.Feed("http://gdata.youtube.com/feeds/base/users/Jaidefinichon/uploads?alt=rss");
+ 				feed.setNumEntries(12);
+ 				feed.includeHistoricalEntries();
+  				feed.load(feedLoaded);
+  				//cargando rss -end
+ 				cubo = document.getElementById('cubo1');
+ 				document.onkeydown = gira;
+ 				recursiveRotation();
+			};
+ 		</script>
+ 		<style>
+ 			body{
+ 				background-color: #EDF22F;
+ 				margin: 0px;
+ 				padding:0px;
+ 			}
+ 			.mainContainer{
+ 				background-color: #DBDCD6;
+ 				position: absolute;
+ 				width: 100%;
+ 				height: 100%;
+ 			}
+ 			.left{
+ 				background-color: #E0DB18;
+ 				position: relative;
+ 				width: 120px;
+ 				height: auto;
+ 				display: inline-block;
+ 				padding: 10px 10px;
+ 			}
+ 			.left ul {
+ 				margin: 0;
+ 				padding: 0px 0px 0px 10px;
+ 			}
+ 			.left ul li{
+ 				text-align: center;
+ 				display: inline-block;
+ 				list-style-type: none;
+ 				width: 30px;
+ 				height: 30px;
+ 				background-color: white;
+ 			}
+ 			.left ul li.void{
+ 				background-color: rgba(1,1,1,0);
+ 			}
+ 			.left ul li.void:hover{
+ 				background-color: rgba(1,1,1,0);
+ 			}
+ 			.left ul li:hover{
+ 				color: white;
+ 				background-color: black;
+ 			}
+
+ 			/*inicio del cubo */
+	 		.contenedor {
+	 			position: absolute;
+	 			//left:570px;
+	 			margin-left: 25%;
+	 			margin-top: 25%;
+	 			//top: 10px;
+	 			//height: 500px;
+	 			display: inline-block;
+	 			-webkit-perspective: 800;
+			    -webkit-perspective-origin: 50% 200px;
+	      		-moz-perspective: 800;
+	      		-moz-perspective-origin: 50% 200px;
+	    	}
+    		.cubo {
+			    position: relative;
+			    margin: 0 auto 0;
+			    height: 200px;
+			    width: 110px;
+			    display: inline-block;
+			    -webkit-transition: -webkit-transform 0.3s;
+			    -webkit-transform-style: preserve-3d;
+			    -moz-transition: -moz-transform 2s linear;
+			    -moz-transform-style: preserve-3d;
+			}
+		    .cara {
+			    position: absolute;
+			    height: 52px;
+			    width: 120px;
+			    padding: 20px;
+			    font-size: 47px;
+			    line-height: 1em;
+			    color: #fff;
+			    border: 2px solid rgba(255,255,255,.1);
+		    }
+		    .cara:hover{
+		    	background-color: rgba(50, 50, 50, 1);
+		    }
+		    .uno {
+			    -webkit-transform: translate3d(0px,0px,0px) rotateX(0deg) ;
+		    }
+		    .dos {
+			    -webkit-transform: translate3d(150px,0px,-40px) rotateY(30deg) ;
+		    }
+		    .tres {
+			    -webkit-transform: translate3d(260px,0px,-150px) rotateY(-300deg) ;
+		    }
+		    .cuatro {
+			    -webkit-transform: translate3d(300px,0px,-300px) rotateY(90deg);
+		    }
+		    .cinco {
+			    -webkit-transform: translate3d(260px,0px,-450px) rotateY(-600deg);
+		    }
+		    .seis {
+			    -webkit-transform: translate3d(150px,0px,-560px) rotateY(150deg);
+		    }
+		    .siete {
+			    -webkit-transform: translate3d(0px,0px,-600px) rotateY(-900deg);
+		    }
+		    .ocho {
+			    -webkit-transform: translate3d(-150px,0px,-560px) rotateY(210deg);
+		    }
+		    .nueve {
+			    -webkit-transform: translate3d(-260px,0px,-450px) rotateY(-1200deg);
+		    }
+		    .dies {
+			    -webkit-transform: translate3d(-300px,0px,-300px) rotateY(270deg)
+		    }
+		    .once {
+			    -webkit-transform: translate3d(-260px,0px,-150px) rotateY(-1500deg);
+		    }
+		    .doce {
+			    -webkit-transform: translate3d(-150px,0px,-40px) rotateY(-30deg);
+		    }
+		    .centro {
+		    	width: 555px;
+			    -webkit-transform: translate3d(-218px,0px,-312px) rotateY(0deg);
+			    background-color: #272822;
+		    }
+		    .centro2 {
+		    	width: 555px;
+			    -webkit-transform: translate3d(-218px,0px,-312px) rotateY(90deg);
+			    background-color: #272822;
+		    }
+		    .punto {
+		    	width: 10px;
+		    	height: 10px;
+			    -webkit-transform: translate3d(80px,0px,-290px) rotateX(90deg);
+			    background-color: #272822;
+		    }
+
+ 		</style>
+	</head>
+	<body>
+		<section class="mainContainer">
+			<article class="left">
+				<ul>
+					<li onclick="roty+=30;rota();" ><--</li>
+					<li >*</li>
+					<li onclick="roty-=30;rota();" >--></li>
+				</ul>
+			</article>
+
+			<article class="contenedor">
+				
+				<article id="cubo1" class="cubo">
+					<article class ="cara uno"> </article>
+					<article class ="cara dos"> </article>
+					<article class ="cara tres"> </article>
+					<article class ="cara cuatro"> </article>
+					<article class ="cara cinco"> </article>
+					<article class ="cara seis"> </article>
+					<article class ="cara siete"> </article>
+					<article class ="cara ocho"> </article>
+					<article class ="cara nueve"> </article>
+					<article class ="cara dies"> </article>
+					<article class ="cara once"> </article>
+					<article class ="cara doce"> </article>
+					<!--<article class ="cara centro"> </article>
+					<article class ="cara centro2"> </article>
+					<article class ="cara punto"> </article>-->
+				</article>
+
+
+			</article>
+			<div style="overflow:auto;" id="content">Hola</div>
+		</section>
+	</body>
+</html>
